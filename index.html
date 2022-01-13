@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .container{
+        display: grid;
+        place-items: center;
+        background: rgb(214, 212, 212);
+        flex-direction: column;
+        min-height: 100vh;
+        font-family: 'Roboto', sans-serif;
+
+    }
+    .cards{
+        margin: 0 auto;
+        display: flex;
+        max-width: 900px;
+        flex-wrap: wrap;
+    }
+    .card{
+        font-family: 'Island Moments', cursive;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+        width: 10rem;
+        height: 10em;
+        border-radius: .4em;
+        margin: 2em;
+        text-align: center;
+        box-shadow: 2px 5px 2px 1px rgba(0, 0, 0, 0.2);
+        font-size: 1em;
+        overflow: auto;
+        word-wrap: normal;
+        padding: 5px;
+    }
+    .card:hover{
+        transform: translate(6px,-7px);
+        box-shadow: 2px 5px 2px 1px rgba(60, 0, 255, 0.2);
+
+    }
+    .values{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+    }
+    .task{
+        margin: 15px;
+        padding: 4px 5px;
+        outline: none;
+        border: none;
+    }
+    .button{
+        text-align: center;
+        justify-content: space-between;
+        outline: none;
+        border: none;
+        border-radius: .4em;
+        padding: 4px 8px;
+    }
+</style>
+<body>
+    <div class="container">
+        <h1>TASKS</h1>
+        <div class="cards"></div>
+        <div class="values">
+            <form>
+                <input type="text" autofocus class="task" placeholder="New task">
+                <input type="submit" value="Add" class="button">
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded',()=>{
+            document.querySelector('.button').disabled = true;
+            document.querySelector('.task').onkeyup = ()=>{
+                //setting counter to zero and storing locally
+                if (!localStorage.getItem('counter')) {
+                    localStorage.setItem('counter', 0)
+                }
+                //button activation
+                if (document.querySelector('.task').value.length > 0) {
+                    document.querySelector('.button').disabled = false;
+                } else {
+                    document.querySelector('.button').disabled = true; 
+                }
+            }
+            document.querySelector('form').onsubmit = ()=>{
+                // creating a card
+                const task = document.querySelector('.task').value;
+                const card = document.createElement('div');
+                card.className = "card";
+                //counting the tasks using local storage
+                let counter = localStorage.getItem('counter')
+                counter++;
+                const head = document.createElement('h4');
+                head.className = "head"
+                head.innerText = "TASK NO : " + counter
+                localStorage.setItem('counter', counter)
+                card.append(head)
+                const tasking = document.createElement('p');
+                tasking.className = 'tasking';
+                tasking.innerHTML = "Task : " + task;
+                card.append(tasking);
+                const cards = document.querySelector('.cards');
+                cards.append(card);
+                document.querySelector('.task').value = '';
+                document.querySelector('.button').disabled = true;
+
+                return false
+
+            }
+        } )
+    </script>
+</body>
+</html>
